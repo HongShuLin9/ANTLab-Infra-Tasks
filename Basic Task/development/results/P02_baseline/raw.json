@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "| 任务 | 负责人角色 | 依赖 | 验收条件 | 说明 |\n|------|------------|------|----------|------|\n| 文档导入 | 后端开发人员 | 依赖文档 | 完成文档导入 | 后端人员需要协调文档导入 |\n| 搜索 | 前端开发人员 | 依赖文档 | 完成搜索 | 前端人员需使用文档进行搜索 |\n| 问答 | 后端开发人员 | 依赖文档 | 完成问答 | 后端人员需支持问答功能 |\n| 基础权限 | 测试人员 | 依赖文档 | 完成基础权限设置 | 测试人员需进行权限验证 |\n\n**主要风险及处理建议：**\n\n1. **文档导入失败**  \n   - **风险**：文档导入功能出现技术问题，影响用户访问。  \n   - **处理建议**：提前测试文档导入环境，使用版本控制工具（如 Git）进行版本管理，确保所有依赖项已更新。\n\n2. **权限设置混乱**  \n   - **风险**：权限配置不合理，导致用户无法访问功能。  \n   - **处理建议**：由测试人员进行权限检查，确保权限分配合理，设置清晰的权限标识。\n\n3. **搜索功能延迟**  \n   - **风险**：搜索功能响应慢，影响用户体验。  \n   - **处理建议**：优化搜索逻辑，增加缓存机制，定期测试系统性能。"
+      }
+    }
+  ],
+  "created": 1791729391,
+  "model": "/home/student/models/Qwen3-0.6B-Q8_0.gguf",
+  "system_fingerprint": "b11435-43fe9c642",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 313,
+    "prompt_tokens": 167,
+    "total_tokens": 480,
+    "prompt_tokens_details": {
+      "cached_tokens": 65
+    }
+  },
+  "id": "chatcmpl-bu2elkdMjAtMklVC43aGTdTOaXFD4S3t",
+  "timings": {
+    "cache_n": 65,
+    "prompt_n": 102,
+    "prompt_ms": 11.92,
+    "prompt_per_token_ms": 0.11686274509803922,
+    "prompt_per_second": 8557.046979865772,
+    "predicted_n": 313,
+    "predicted_ms": 877.458,
+    "predicted_per_token_ms": 2.8123653846153847,
+    "predicted_per_second": 355.5725744138181
+  }
+}

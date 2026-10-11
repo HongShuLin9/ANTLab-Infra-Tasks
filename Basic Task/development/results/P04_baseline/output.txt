@@ -1,0 +1,107 @@
+### 任务：设计单机运行的任务处理方案
+
+#### 1. **任务状态**
+- **任务状态**：记录任务是否已完成、是否失败、是否需要再次执行或是否已重启。
+- **状态标识符**：使用字符串表示，如 `completed`, `failed`, `retries`, `restart`.
+
+#### 2. **去重方式**
+- **唯一标识符**：为任务添加唯一标识，例如使用时间戳或任务ID。
+- **去重机制**：在任务处理中，使用一个字典来记录任务状态，避免重复执行。
+
+#### 3. **重试上限**
+- **最大重试次数**：设定一个最大值，例如 `max_retries = 3`，表示任务在失败后最多尝试3次。
+
+#### 4. **持久化**
+- **日志记录**：在任务处理完成后，将任务状态和执行信息记录为文件，用于后续恢复。
+- **文件路径**：使用 `file_path = 'task_log.txt'` 作为持久化存储的位置。
+
+#### 5. **重启恢复流程**
+- **任务重启后重置**：在程序重启后，任务状态被重置为初始状态（如 `completed`, `failed`, `retries`）。
+- **自动保存**：在任务重启后，调用 `save_state()` 方法，将任务状态保存到日志中。
+
+#### 6. **核心代码示例**
+
+```python
+import time
+import os
+import functools
+
+# 1. 任务状态标识符
+task_state = {
+    'completed': False,
+    'failed': False,
+    'retries': 0,
+    'restart': False
+}
+
+# 2. 日志文件路径
+log_file_path = 'task_log.txt'
+
+# 3. 任务处理函数
+def handle_task(task_id, task_name, retry_count, timeout):
+    task_name = task_name or 'default_task'
+    task_state['completed'] = False
+    task_state['failed'] = False
+    task_state['retries'] = retry_count
+    task_state['restart'] = False
+
+    # 4. 去重方式
+    # 使用一个字典记录任务状态
+    unique_tasks = {task_id: task_state}
+
+    # 5. 重试机制
+    for attempt in range(retry_count + 1):
+        attempt_time = time.time()
+        if attempt >= retry_count:
+            task_state['failed'] = True
+            task_state['retries'] = -1  # 重试失败
+            task_state['restart'] = True
+            break
+        task_state['retries'] = attempt
+
+        # 6. 检查任务是否已成功完成
+        if task_state['retries'] == -1:
+            # 任务成功完成
+            task_state['completed'] = True
+            task_state['retries'] = 0
+            task_state['failed'] = False
+            task_state['restart'] = False
+            save_state()
+
+        else:
+            # 任务未成功完成
+            # 如果是首次运行，那么状态是失败
+            if not task_state['restart']:
+                task_state['failed'] = True
+                task_state['retries'] = -1
+                task_state['restart'] = True
+
+    # 7. 保存状态
+    save_state()
+
+def save_state():
+    with open(log_file_path, 'w') as f:
+        f.write(f"{task_id}: {task_name} ({task_state})\n")
+
+# 8. 主程序
+if __name__ == '__main__':
+    task_id = 'task123'
+    task_name = 'Calculate Result'
+    retry_count = 3
+    timeout = 30
+
+    handle_task(task_id, task_name, retry_count, timeout)
+    handle_task(task_id, task_name, retry_count, timeout)
+    handle_task(task_id, task_name, retry_count, timeout)
+
+    # 任务状态记录到日志
+    save_state()
+```
+
+#### 说明：
+
+- **任务状态**：记录任务是否完成、失败、重试次数和重启状态。
+- **去重方式**：通过一个字典来记录任务唯一标识符。
+- **重试上限**：设定最大重试次数。
+- **持久化**：使用文件记录任务状态。
+- **重启恢复**：在程序重启后，状态被重置为初始状态。

@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "### 第一周办理清单\n\n#### 一、接触客户资料前的事项\n\n1. **制度阅读确认**  \n   - 条款编号：A01  \n   - 时间：入职第一天上午  \n   - 协作角色：沈遥  \n   - 所需材料：制度清单  \n\n2. **保密承诺**  \n   - 条款编号：A02  \n   - 时间：入职第一天  \n   - 协作角色：唐禾  \n\n3. **多因素认证设置**  \n   - 条款编号：A02  \n   - 时间：入职第一天  \n   - 协作角色：唐禾  \n\n4. **项目权限审批与验证**  \n   - 条款编号：A3  \n   - 时间：入职前两个工作日内  \n   - 协作角色：唐禾、项目负责人  \n\n5. **设备领取与访问验证**  \n   - 条款编号：A4  \n   - 时间：入职第三个工作日前  \n   - 协作角色：沈遥  \n\n6. **入职资料汇总**  \n   - 条款编号：A4  \n   - 时间：入职第五个工作日  \n   - 协作角色：沈遥  \n\n---\n\n#### 二、工作地点或设备发生变化时需补办的手续\n\n1. **设备借用与归还**  \n   - 条款编号：C01、C04  \n   - 时间：设备借用、归还等操作前  \n   - 协作角色：唐禾、沈遥  \n\n2. **远程办公申请与确认**  \n   - 条款编号：B03、B06  \n   - 时间：远程办公申请、确认后  \n   - 协作角色：沈遥、林悦  \n\n3. **远程办公设备检查与使用验证**  \n   - 条款编号：B04  \n   - 时间：远程办公期间  \n   - 协作角色：沈遥、林悦  \n\n4. **设备归还与资料迁移**  \n   - 条款编号：C05  \n   - 时间：归还设备时  \n   - 协作角色：唐禾、沈遥  \n\n---\n\n以上为根据制度整理的第一周办理清单，包含事项、时间、协作角色、所需材料及对应条款编号。"
+      }
+    }
+  ],
+  "created": 1791729408,
+  "model": "/home/student/models/Qwen3-0.6B-Q8_0.gguf",
+  "system_fingerprint": "b11435-43fe9c642",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 486,
+    "prompt_tokens": 1847,
+    "total_tokens": 2333,
+    "prompt_tokens_details": {
+      "cached_tokens": 1784
+    }
+  },
+  "id": "chatcmpl-daJYuvTd2Twy3beNGF06Ug6qrWbxMGBG",
+  "timings": {
+    "cache_n": 1784,
+    "prompt_n": 63,
+    "prompt_ms": 12.904,
+    "prompt_per_token_ms": 0.20482539682539683,
+    "prompt_per_second": 4882.207067575946,
+    "predicted_n": 486,
+    "predicted_ms": 1786.014,
+    "predicted_per_token_ms": 3.682503092783505,
+    "predicted_per_second": 271.5544223057602
+  }
+}

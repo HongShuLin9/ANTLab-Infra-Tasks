@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "### 实现函数\n\n```python\ndef aggregate_by_owner(records):\n    \"\"\"\n    使用 Python 标准库实现 aggregate_by_owner(records)。\n    \n    输入是字典列表，每条记录包含 owner 和 status。按处理人统计总数，以及 open、processing、closed 三种状态的数量。\n    状态匹配忽略大小写；缺失或为空的 owner 归为 unassigned；未知状态计入 other；输入为空时返回空字典。\n    \n    输出：字典，键为处理人，值为统计结果。\n    \"\"\"\n    owner_map = {}\n    for record in records:\n        owner = record.get('owner')\n        status = record.get('status')\n        \n        if owner is None or owner == '':  \n            owner = 'unassigned'\n        elif status is None:\n            status = 'other'\n        elif status in ['open', 'processing', 'closed']:\n            status = status.lower()\n        \n        if owner not in owner_map:\n            owner_map[owner] = {\n                'total': 0,\n                'open': 0,\n                'processing': 0,\n                'closed': 0\n            }\n        \n        owner_map[owner]['total'] += 1\n        if status in ['open', 'processing', 'closed']:\n            owner_map[owner][status] += 1\n\n    return owner_map\n```\n\n### 测试示例\n\n```python\n# 示例 1\nrecords = [{\"owner\": \"John\", \"status\": \"open\"}, {\"owner\": \"Jane\", \"status\": \"open\"}, {\"owner\": \"John\", \"status\": \"processing\"}]\nresult = aggregate_by_owner(records)\nprint(result)\n# 输出：{'John': {'total': 2, 'open': 1, 'processing': 1, 'closed': 0}, 'Jane': {'total': 1, 'open': 0, 'processing': 0, 'closed': 0}}\n\n# 示例 2\nrecords = [{\"owner\": \"Alice\", \"status\": \"open\"}, {\"owner\": \"Alice\", \"status\": \"processing\"}, {\"owner\": \"Bob\", \"status\": \"closed\"}]\nresult = aggregate_by_owner(records)\nprint(result)\n# 输出：{'Alice': {'total': 2, 'open': 1, 'processing': 1, 'closed': 0}, 'Bob': {'total': 1, 'open': 0, 'processing': 0, 'closed': 1}}\n\n# 示例 3\nrecords = [{\"owner\": \"Alice\", \"status\": \"open\"}, {\"owner\": \"Alice\", \"status\": \"closed\"}, {\"owner\": \"Bob\", \"status\": \"processing\"}]\nresult = aggregate_by_owner(records)\nprint(result)\n# 输出：{'Alice': {'total': 2, 'open': 1, 'processing': 1, 'closed': 0}, 'Bob': {'total': 1, 'open': 0, 'processing': 0, 'closed': 0}}\n\n# 示例 4\nrecords = [{\"owner\": \"John\", \"status\": \"unknown\"}, {\"owner\": \"Jane\", \"status\": \"unknown\"}]\nresult = aggregate_by_owner(records)\nprint(result)\n# 输出：{'John': {'total': 1, 'open': 0, 'processing': 0, 'closed': 0}, 'Jane': {'total': 1, 'open': 0, 'processing': 0, 'closed': 0}}\n\n# 示例 5\nrecords = []\nresult = aggregate_by_owner(records)\nprint(result)\n# 输出：{} (输入为空时返回空字典)\n```\n\n### 结论\n\n- 输入为字典列表，处理人是键。\n- 处理人未提供时，将 owner 视为 unassigned。\n- 状态匹配忽略大小写。\n- 未知状态计入 other。\n- 输入为空时返回空字典。"
+      }
+    }
+  ],
+  "created": 1791729393,
+  "model": "/home/student/models/Qwen3-0.6B-Q8_0.gguf",
+  "system_fingerprint": "b11435-43fe9c642",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 815,
+    "prompt_tokens": 163,
+    "total_tokens": 978,
+    "prompt_tokens_details": {
+      "cached_tokens": 65
+    }
+  },
+  "id": "chatcmpl-3UW2wl0tA6NchdoddA1GF20HNqK7zpX9",
+  "timings": {
+    "cache_n": 65,
+    "prompt_n": 98,
+    "prompt_ms": 13.875,
+    "prompt_per_token_ms": 0.14158163265306123,
+    "prompt_per_second": 7063.063063063063,
+    "predicted_n": 815,
+    "predicted_ms": 2438.096,
+    "predicted_per_token_ms": 2.9952039312039314,
+    "predicted_per_second": 333.8670831665365
+  }
+}

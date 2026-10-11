@@ -1,0 +1,102 @@
+[
+  {
+    "id": "P01",
+    "status": "ok",
+    "latency_s": 1.085,
+    "prompt_tokens": 149,
+    "completion_tokens": 120,
+    "total_tokens": 269,
+    "prefill_tps": 715.8,
+    "decode_tps": 316.29
+  },
+  {
+    "id": "P02",
+    "status": "ok",
+    "latency_s": 0.919,
+    "prompt_tokens": 167,
+    "completion_tokens": 313,
+    "total_tokens": 480,
+    "prefill_tps": 8557.05,
+    "decode_tps": 355.57
+  },
+  {
+    "id": "P03",
+    "status": "ok",
+    "latency_s": 2.495,
+    "prompt_tokens": 163,
+    "completion_tokens": 815,
+    "total_tokens": 978,
+    "prefill_tps": 7063.06,
+    "decode_tps": 333.87
+  },
+  {
+    "id": "P04",
+    "status": "ok",
+    "latency_s": 2.801,
+    "prompt_tokens": 152,
+    "completion_tokens": 942,
+    "total_tokens": 1094,
+    "prefill_tps": 5761.97,
+    "decode_tps": 347.99
+  },
+  {
+    "id": "D01",
+    "status": "ok",
+    "latency_s": 3.483,
+    "prompt_tokens": 2293,
+    "completion_tokens": 928,
+    "total_tokens": 3221,
+    "prefill_tps": 201.32,
+    "decode_tps": 280.29
+  },
+  {
+    "id": "D02",
+    "status": "ok",
+    "latency_s": 2.322,
+    "prompt_tokens": 2284,
+    "completion_tokens": 608,
+    "total_tokens": 2892,
+    "prefill_tps": 4519.37,
+    "decode_tps": 264.21
+  },
+  {
+    "id": "D03",
+    "status": "ok",
+    "latency_s": 4.159,
+    "prompt_tokens": 1869,
+    "completion_tokens": 775,
+    "total_tokens": 2644,
+    "prefill_tps": 5494.51,
+    "decode_tps": 261.48
+  },
+  {
+    "id": "D04",
+    "status": "ok",
+    "latency_s": 1.809,
+    "prompt_tokens": 1847,
+    "completion_tokens": 486,
+    "total_tokens": 2333,
+    "prefill_tps": 4882.21,
+    "decode_tps": 271.55
+  },
+  {
+    "id": "C01",
+    "status": "ok",
+    "latency_s": 3.736,
+    "prompt_tokens": 1665,
+    "completion_tokens": 851,
+    "total_tokens": 2516,
+    "prefill_tps": 297.0,
+    "decode_tps": 241.42
+  },
+  {
+    "id": "C02",
+    "status": "ok",
+    "latency_s": 4.42,
+    "prompt_tokens": 1680,
+    "completion_tokens": 1051,
+    "total_tokens": 2731,
+    "prefill_tps": 5418.46,
+    "decode_tps": 238.83
+  }
+]

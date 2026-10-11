@@ -1,0 +1,80 @@
+### 实现函数
+
+```python
+def aggregate_by_owner(records):
+    """
+    使用 Python 标准库实现 aggregate_by_owner(records)。
+    
+    输入是字典列表，每条记录包含 owner 和 status。按处理人统计总数，以及 open、processing、closed 三种状态的数量。
+    状态匹配忽略大小写；缺失或为空的 owner 归为 unassigned；未知状态计入 other；输入为空时返回空字典。
+    
+    输出：字典，键为处理人，值为统计结果。
+    """
+    owner_map = {}
+    for record in records:
+        owner = record.get('owner')
+        status = record.get('status')
+        
+        if owner is None or owner == '':  
+            owner = 'unassigned'
+        elif status is None:
+            status = 'other'
+        elif status in ['open', 'processing', 'closed']:
+            status = status.lower()
+        
+        if owner not in owner_map:
+            owner_map[owner] = {
+                'total': 0,
+                'open': 0,
+                'processing': 0,
+                'closed': 0
+            }
+        
+        owner_map[owner]['total'] += 1
+        if status in ['open', 'processing', 'closed']:
+            owner_map[owner][status] += 1
+
+    return owner_map
+```
+
+### 测试示例
+
+```python
+# 示例 1
+records = [{"owner": "John", "status": "open"}, {"owner": "Jane", "status": "open"}, {"owner": "John", "status": "processing"}]
+result = aggregate_by_owner(records)
+print(result)
+# 输出：{'John': {'total': 2, 'open': 1, 'processing': 1, 'closed': 0}, 'Jane': {'total': 1, 'open': 0, 'processing': 0, 'closed': 0}}
+
+# 示例 2
+records = [{"owner": "Alice", "status": "open"}, {"owner": "Alice", "status": "processing"}, {"owner": "Bob", "status": "closed"}]
+result = aggregate_by_owner(records)
+print(result)
+# 输出：{'Alice': {'total': 2, 'open': 1, 'processing': 1, 'closed': 0}, 'Bob': {'total': 1, 'open': 0, 'processing': 0, 'closed': 1}}
+
+# 示例 3
+records = [{"owner": "Alice", "status": "open"}, {"owner": "Alice", "status": "closed"}, {"owner": "Bob", "status": "processing"}]
+result = aggregate_by_owner(records)
+print(result)
+# 输出：{'Alice': {'total': 2, 'open': 1, 'processing': 1, 'closed': 0}, 'Bob': {'total': 1, 'open': 0, 'processing': 0, 'closed': 0}}
+
+# 示例 4
+records = [{"owner": "John", "status": "unknown"}, {"owner": "Jane", "status": "unknown"}]
+result = aggregate_by_owner(records)
+print(result)
+# 输出：{'John': {'total': 1, 'open': 0, 'processing': 0, 'closed': 0}, 'Jane': {'total': 1, 'open': 0, 'processing': 0, 'closed': 0}}
+
+# 示例 5
+records = []
+result = aggregate_by_owner(records)
+print(result)
+# 输出：{} (输入为空时返回空字典)
+```
+
+### 结论
+
+- 输入为字典列表，处理人是键。
+- 处理人未提供时，将 owner 视为 unassigned。
+- 状态匹配忽略大小写。
+- 未知状态计入 other。
+- 输入为空时返回空字典。
