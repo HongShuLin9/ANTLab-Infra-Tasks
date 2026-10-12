@@ -1,0 +1,167 @@
+[
+  {
+    "round": 1,
+    "level": 1,
+    "success": 1,
+    "fail": 0,
+    "total_wall_s": 0.564,
+    "total_completion_tokens": 140,
+    "aggregate_throughput_tps": 248.17,
+    "avg_wall_s": 0.564,
+    "avg_predicted_tps": 324.01
+  },
+  {
+    "round": 2,
+    "level": 1,
+    "success": 1,
+    "fail": 0,
+    "total_wall_s": 0.333,
+    "total_completion_tokens": 116,
+    "aggregate_throughput_tps": 348.17,
+    "avg_wall_s": 0.333,
+    "avg_predicted_tps": 372.46
+  },
+  {
+    "round": 3,
+    "level": 1,
+    "success": 1,
+    "fail": 0,
+    "total_wall_s": 0.454,
+    "total_completion_tokens": 161,
+    "aggregate_throughput_tps": 354.26,
+    "avg_wall_s": 0.454,
+    "avg_predicted_tps": 369.95
+  },
+  {
+    "round": 1,
+    "level": 2,
+    "success": 2,
+    "fail": 0,
+    "total_wall_s": 0.615,
+    "total_completion_tokens": 293,
+    "aggregate_throughput_tps": 476.54,
+    "avg_wall_s": 0.478,
+    "avg_predicted_tps": 326.81
+  },
+  {
+    "round": 2,
+    "level": 2,
+    "success": 2,
+    "fail": 0,
+    "total_wall_s": 0.655,
+    "total_completion_tokens": 330,
+    "aggregate_throughput_tps": 503.63,
+    "avg_wall_s": 0.611,
+    "avg_predicted_tps": 290.81
+  },
+  {
+    "round": 3,
+    "level": 2,
+    "success": 2,
+    "fail": 0,
+    "total_wall_s": 0.667,
+    "total_completion_tokens": 330,
+    "aggregate_throughput_tps": 494.83,
+    "avg_wall_s": 0.629,
+    "avg_predicted_tps": 284.55
+  },
+  {
+    "round": 1,
+    "level": 4,
+    "success": 4,
+    "fail": 0,
+    "total_wall_s": 1.317,
+    "total_completion_tokens": 529,
+    "aggregate_throughput_tps": 401.53,
+    "avg_wall_s": 1.07,
+    "avg_predicted_tps": 146.96
+  },
+  {
+    "round": 2,
+    "level": 4,
+    "success": 4,
+    "fail": 0,
+    "total_wall_s": 1.044,
+    "total_completion_tokens": 552,
+    "aggregate_throughput_tps": 528.84,
+    "avg_wall_s": 0.899,
+    "avg_predicted_tps": 173.13
+  },
+  {
+    "round": 3,
+    "level": 4,
+    "success": 4,
+    "fail": 0,
+    "total_wall_s": 0.842,
+    "total_completion_tokens": 612,
+    "aggregate_throughput_tps": 726.63,
+    "avg_wall_s": 0.744,
+    "avg_predicted_tps": 229.99
+  },
+  {
+    "round": 1,
+    "level": 8,
+    "success": 8,
+    "fail": 0,
+    "total_wall_s": 1.537,
+    "total_completion_tokens": 1132,
+    "aggregate_throughput_tps": 736.68,
+    "avg_wall_s": 1.165,
+    "avg_predicted_tps": 138.95
+  },
+  {
+    "round": 2,
+    "level": 8,
+    "success": 8,
+    "fail": 0,
+    "total_wall_s": 2.086,
+    "total_completion_tokens": 1188,
+    "aggregate_throughput_tps": 569.43,
+    "avg_wall_s": 1.611,
+    "avg_predicted_tps": 107.76
+  },
+  {
+    "round": 3,
+    "level": 8,
+    "success": 8,
+    "fail": 0,
+    "total_wall_s": 1.684,
+    "total_completion_tokens": 1053,
+    "aggregate_throughput_tps": 625.17,
+    "avg_wall_s": 1.323,
+    "avg_predicted_tps": 116.77
+  },
+  {
+    "round": 1,
+    "level": 10,
+    "success": 10,
+    "fail": 0,
+    "total_wall_s": 2.784,
+    "total_completion_tokens": 1344,
+    "aggregate_throughput_tps": 482.8,
+    "avg_wall_s": 1.555,
+    "avg_predicted_tps": 121.8
+  },
+  {
+    "round": 2,
+    "level": 10,
+    "success": 10,
+    "fail": 0,
+    "total_wall_s": 2.533,
+    "total_completion_tokens": 1323,
+    "aggregate_throughput_tps": 522.35,
+    "avg_wall_s": 1.488,
+    "avg_predicted_tps": 122.95
+  },
+  {
+    "round": 3,
+    "level": 10,
+    "success": 10,
+    "fail": 0,
+    "total_wall_s": 2.662,
+    "total_completion_tokens": 1276,
+    "aggregate_throughput_tps": 479.27,
+    "avg_wall_s": 1.458,
+    "avg_predicted_tps": 122.0
+  }
+]
