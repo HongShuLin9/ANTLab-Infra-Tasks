@@ -1,0 +1,40 @@
+{
+  "events": [
+    {
+      "time": "2026-10-13 22:03:50",
+      "event": "health_check",
+      "detail": "healthy=True"
+    },
+    {
+      "time": "2026-10-13 22:03:50",
+      "event": "stop",
+      "detail": "手动停止 llama-server"
+    },
+    {
+      "time": "2026-10-13 22:03:52",
+      "event": "health_check",
+      "detail": "after stop, healthy=False"
+    },
+    {
+      "time": "2026-10-13 22:03:52",
+      "event": "restart",
+      "detail": "调用 start_server"
+    },
+    {
+      "time": "2026-10-13 22:03:54",
+      "event": "recovery",
+      "detail": "恢复耗时 2.01s, 成功=True"
+    },
+    {
+      "time": "2026-10-13 22:03:54",
+      "event": "verify",
+      "detail": "{\"ok\": true, \"latency_s\": 0.066, \"content\": \"你好！有什么可以帮助你的吗？😊\"}"
+    }
+  ],
+  "recovery_time_s": 2.01,
+  "final_request": {
+    "ok": true,
+    "latency_s": 0.066,
+    "content": "你好！有什么可以帮助你的吗？😊"
+  }
+}

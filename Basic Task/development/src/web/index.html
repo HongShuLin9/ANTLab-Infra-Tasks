@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>ANTLab Infra - 推理服务面板</title>
+  <style>
+    body { font-family: -apple-system, "Segoe UI", sans-serif; margin: 24px; background: #f5f5f5; color: #222; }
+    h1 { font-size: 22px; }
+    h2 { font-size: 16px; margin-top: 24px; border-bottom: 1px solid #ddd; padding-bottom: 6px; }
+    .card { background: #fff; padding: 16px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-bottom: 16px; }
+    .status-ok { color: #14803c; font-weight: bold; }
+    .status-down { color: #c0392b; font-weight: bold; }
+    table { border-collapse: collapse; width: 100%; font-size: 13px; }
+    th, td { border: 1px solid #e0e0e0; padding: 6px 8px; text-align: left; }
+    th { background: #f0f0f0; }
+    tr:nth-child(even) { background: #fafafa; }
+    pre { background: #f8f8f8; padding: 10px; border-radius: 4px; overflow-x: auto; font-size: 12px; }
+    button { padding: 4px 10px; margin-right: 6px; cursor: pointer; }
+    .bar { display: inline-block; height: 12px; background: #4a90e2; vertical-align: middle; margin-right: 6px; }
+  </style>
+</head>
+<body>
+  <h1>ANTLab Infra · 推理服务面板</h1>
+
+  <div class="card">
+    <h2>服务状态</h2>
+    <div id="health">检查中…</div>
+  </div>
+
+  <div class="card">
+    <h2>10 个任务基线测试</h2>
+    <table id="summary-table">
+      <thead>
+        <tr><th>任务</th><th>耗时(s)</th><th>Completion tokens</th><th>Prefill t/s</th><th>Decode t/s</th><th>输出</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>并发对比（4 slot 基线 vs 8 slot 优化）</h2>
+    <table id="concurrency-table">
+      <thead>
+        <tr><th>并发</th><th>基线吞吐 t/s</th><th>8 slot 吞吐 t/s</th><th>提升</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>任务输出</h2>
+    <div id="output-buttons"></div>
+    <pre id="output-content">点击上方按钮查看对应任务输出</pre>
+  </div>
+
+<script>
+async function loadHealth() {
+  const el = document.getElementById("health");
+  try {
+    const r = await fetch("/api/health");
+    const d = await r.json();
+    if (d.status === "ok") {
+      el.innerHTML = `<span class="status-ok">● 在线</span> · 模型：${d.model}`;
+    } else {
+      el.innerHTML = `<span class="status-down">● 离线</span> · ${d.error || ""}`;
+    }
+  } catch (e) {
+    el.innerHTML = `<span class="status-down">● 无法连接后端</span>`;
+  }
+}
+
+async function loadSummary() {
+  const r = await fetch("/api/summary");
+  const rows = await r.json();
+  const tbody = document.querySelector("#summary-table tbody");
+  tbody.innerHTML = "";
+  rows.forEach(x => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${x.id}</td>
+      <td>${x.latency_s ?? ""}</td>
+      <td>${x.completion_tokens ?? ""}</td>
+      <td>${x.prefill_tps ?? ""}</td>
+      <td>${x.decode_tps ?? ""}</td>
+      <td><button onclick="showOutput('${x.id}')">查看</button></td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+async function loadConcurrency() {
+  const r = await fetch("/api/concurrency");
+  const data = await r.json();
+  const baseline = data.baseline || [];
+  const opt = data["8slots"] || [];
+
+  // 按并发数聚合（取每并发所有轮的平均）
+  function avgByLevel(rows) {
+    const map = {};
+    rows.forEach(x => {
+      if (!map[x.level]) map[x.level] = [];
+      map[x.level].push(x.aggregate_throughput_tps);
+    });
+    const out = {};
+    Object.keys(map).forEach(k => {
+      out[k] = map[k].reduce((a,b)=>a+b,0) / map[k].length;
+    });
+    return out;
+  }
+
+  const b = avgByLevel(baseline);
+  const o = avgByLevel(opt);
+  const levels = [1,2,4,8,10];
+  const tbody = document.querySelector("#concurrency-table tbody");
+  tbody.innerHTML = "";
+  const max = Math.max(...levels.map(l => Math.max(b[l]||0, o[l]||0)));
+  levels.forEach(l => {
+    const bv = b[l] ? b[l].toFixed(1) : "-";
+    const ov = o[l] ? o[l].toFixed(1) : "-";
+    let imp = "-";
+    if (b[l] && o[l]) imp = ((o[l]/b[l]-1)*100).toFixed(0) + "%";
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${l}</td>
+      <td><span class="bar" style="width:${(b[l]||0)/max*200}px"></span>${bv}</td>
+      <td><span class="bar" style="width:${(o[l]||0)/max*200}px;background:#14803c"></span>${ov}</td>
+      <td>${imp}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function buildOutputButtons() {
+  const ids = ["P01","P02","P03","P04","D01","D02","D03","D04","C01","C02"];
+  const el = document.getElementById("output-buttons");
+  el.innerHTML = ids.map(id => `<button onclick="showOutput('${id}')">${id}</button>`).join("");
+}
+
+async function showOutput(id) {
+  const r = await fetch(`/api/task/${id}`);
+  const text = await r.text();
+  document.getElementById("output-content").textContent = text;
+}
+
+loadHealth();
+loadSummary();
+loadConcurrency();
+buildOutputButtons();
+</script>
+</body>
+</html>
