@@ -1,15 +1,56 @@
-# 开发区域
+# ANTLab Infra - Basic Task
 
-在本目录完成开发，具体语言、框架与 `src/` 内部结构自行设计。
+## 方向与提交信息
 
-| 目录 | 用途 |
-| --- | --- |
-| [src](src/README.md) | 系统源码、依赖声明与模块说明 |
-| [configs](configs/README.md) | 推理服务、测试负载、基线及优化配置 |
-| [tests](tests/README.md) | 功能、数据统计及异常恢复测试 |
-| [results](results/README.md) | 原始记录、输出、汇总与优化记录 |
-| [reports](reports/README.md) | 最终书面报告与配图 |
+- 方向：Infra
+- 分支：master
+- commit SHA：见 GitHub 仓库最新提交
 
-完成项目后，请更新本文件，包含：项目简介、系统结构、环境依赖、模型获取与校验信息、运行方法、测试方法、前端访问方式、报告和数据位置。模型与 llama.cpp 构建版本需可定位。
+## 模型信息
 
-通过 fork 仓库进行开发，按功能或修复目的组织提交。提交前核对 GitHub 上的文件完整性，并记录最终分支和 commit SHA。
+- 模型：Qwen3-0.6B-GGUF Q8_0
+- 文件大小：约 604 MiB
+- 参数量：596M
+- 下载：https://modelscope.cn/models/Qwen/Qwen3-0.6B-GGUF
+- 存储位置：~/models/Qwen3-0.6B-Q8_0.gguf
+
+## 运行入口
+
+启动推理服务（基线 4 slot）：
+bash configs/server_baseline.sh
+
+启动推理服务（优化 8 slot）：
+bash configs/server_8slots.sh
+
+批量执行 10 个任务：
+cd src && python3 runner.py
+
+并发测试：
+python3 concurrency_test.py
+
+错误恢复测试：
+python3 recover.py
+
+前端展示：
+python3 web/app.py
+
+## 报告位置
+
+- reports/报告.md — 书面报告
+- reports/并发对比.png — 并发吞吐对比图
+
+## 测试数据位置
+
+- results/summary_baseline.json — 10 任务基线汇总
+- results/concurrency_baseline.json — 4 slot 并发数据
+- results/concurrency_8slots.json — 8 slot 并发数据
+- results/recovery_log.json — 错误恢复时间线
+- results/<ID>_baseline/output.txt — 各任务模型输出
+
+## 主要优化
+
+slot 数从 4 增加到 8，并发 8 时聚合吞吐从 309 t/s 提升到 644 t/s（+108%）。代价是每 slot 上下文从 40960 降到 10496。
+
+## 复现步骤
+
+见 reports/报告.md 第 12 节。
